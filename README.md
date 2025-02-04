@@ -1,36 +1,129 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# アクセサリー販売アプリ
 
-## Getting Started
+このアプリは、アクセサリーをオンラインで販売するためのプラットフォームです。ユーザーはアクセサリー一覧を閲覧し、商品詳細を確認、カートに追加して購入できます。また、お問い合わせフォームを通じてサポートに連絡を取ることも可能です。
 
-First, run the development server:
+## 機能
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### 1. アクセサリー一覧（商品一覧）
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **概要**: アクセサリーの一覧ページでは、複数の商品を表示します。各商品には画像、名前、価格が表示され、商品をクリックすることで詳細ページに移動できます。
+- **特徴**:
+  - 商品のサムネイル画像、名前、価格を表示
+  - 商品クリックで商品詳細ページに遷移
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 2. 商品詳細ページ
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **概要**: 商品詳細ページでは、商品の詳細情報（画像、説明、価格）を表示します。ユーザーは数量を選択し、「カートに追加」ボタンで購入準備ができます。
+- **特徴**:
+  - 商品の詳細情報（画像、価格、説明）を表示
+  - 購入数量を変更できるオプション
+  - 「カートに追加」ボタンで選んだ商品をカートに追加
 
-## Learn More
+### 3. カート機能
 
-To learn more about Next.js, take a look at the following resources:
+- **概要**: カートページでは、ユーザーが選んだ商品が一覧で表示され、数量や価格、合計金額が計算されます。また、カートから商品を削除することもできます。
+- **特徴**:
+  - カートに追加された商品が一覧表示される
+  - 商品の数量を変更可能
+  - カート内の商品を削除できる
+  - 合計金額がリアルタイムで計算される
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 4. お問い合わせフォーム
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **概要**: ユーザーはサイト上からサポートに連絡するためのお問い合わせフォームを送信できます。フォームには、名前、メールアドレス、メッセージが含まれます。
+- **特徴**:
+  - ユーザーの名前、メールアドレス、メッセージを入力
+  - メッセージ送信後、確認のメッセージが表示される
 
-## Deploy on Vercel
+## 使用方法
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 1. アクセサリー一覧（商品一覧）
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- ホームページにアクセスすると、アクセサリー一覧が表示されます。各商品の名前、価格、サムネイル画像が表示されます。
+- 商品名をクリックすると、商品詳細ページに遷移します。
+
+### 2. 商品詳細ページ
+
+- 商品詳細ページでは、商品の詳細情報（価格、説明、画像など）が表示されます。
+- ユーザーは購入数量を選択し、カートに商品を追加できます。
+
+### 3. カート機能
+
+- ユーザーはカートページで選んだ商品を確認できます。数量を変更したり、カートから商品を削除したりすることができます。
+- 合計金額がリアルタイムで更新されます。
+
+### 4. お問い合わせフォーム
+
+- お問い合わせフォームを使って、サポートチームにメッセージを送信できます。
+- 必要な情報（名前、メールアドレス、メッセージ）を入力し、「送信」ボタンをクリックすると、お問い合わせが送信されます。
+
+## 技術スタック
+
+- **フロントエンド**: Next.js, TypeScript, React
+- **バックエンド**: Node.js（API Routesを利用）
+- **データベース**: Prisma（MySQL / PostgreSQL）
+- **決済システム**: Stripe / PayPal
+- **スタイリング**: CSS（カスタムスタイル）
+
+## データベース設計
+
+### 商品テーブル (product)
+
+| 項目         | 説明              |
+|--------------|-------------------|
+| **id**       | 商品ID            |
+| **name**     | 商品名            |
+| **description** | 商品説明          |
+| **price**    | 価格              |
+| **imageUrl** | 商品画像URL       |
+| **createdAt**| 作成日            |
+| **updatedAt**| 更新日            |
+
+### ユーザーテーブル (user)
+
+| 項目         | 説明              |
+|--------------|-------------------|
+| **id**       | ユーザーID        |
+| **email**    | メールアドレス    |
+| **password** | パスワード（JWTを使った認証）|
+| **role**     | ユーザーのロール（管理者、消費者）|
+
+### カートテーブル (cart)
+
+| 項目         | 説明              |
+|--------------|-------------------|
+| **userId**   | ユーザーID        |
+| **productId**| 商品ID            |
+| **quantity** | 購入数量          |
+| **totalPrice**| 合計金額          |
+
+### 注文テーブル (order)
+
+| 項目         | 説明              |
+|--------------|-------------------|
+| **orderId**  | 注文ID            |
+| **userId**   | ユーザーID        |
+| **orderDetails** | 注文詳細（商品ID、数量など）|
+| **totalPrice** | 合計金額          |
+| **status**   | 注文ステータス（処理中、完了）|
+
+### お問い合わせテーブル (inquiry)
+
+| 項目         | 説明              |
+|--------------|-------------------|
+| **id**       | お問い合わせID    |
+| **name**     | ユーザー名        |
+| **email**    | ユーザーメールアドレス|
+| **message**  | お問い合わせ内容  |
+| **createdAt**| 作成日            |
+
+## よくある質問 (FAQ)
+
+### Q1: 支払いはどのように行いますか？
+- **A1**: 決済システムとして **Stripe** または **PayPal** を使用しており、購入時に簡単に支払いを行えます。
+
+### Q2: 商品はどのように管理されますか？
+- **A2**: 管理者はバックエンドから商品の追加、編集、削除を行うことができます。
+
+### Q3: お問い合わせフォームに送信した内容はどこで確認できますか？
+- **A3**: 送信されたお問い合わせ内容は、管理者向けのダッシュボードまたは通知システムで確認できます。
